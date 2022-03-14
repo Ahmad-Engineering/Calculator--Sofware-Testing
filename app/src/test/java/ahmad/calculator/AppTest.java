@@ -4,6 +4,8 @@
 package ahmad.calculator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import ahmad.Calculator;
 
@@ -12,14 +14,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 
 class AppTest {
-    @Test void appHasAGreeting() {
+    @Test
+    void appHasAGreeting() {
         App classUnderTest = new App();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 
     @Test
     @DisplayName("Adding Test")
-    void appMustAdding () {
+    void appMustAdding() {
         assertEquals(9, Calculator.adding(4, 5));
+    }
+
+    @ParameterizedTest(name = "{0} + {1} = {2}")
+    @CsvSource({
+            "0, 1, 1",
+            "1, 2, 3",
+            "49, 51, 100",
+            "1, 100, 101",
+    })
+    @DisplayName("Test With Paramitrized Test")
+    void anotherAddingWithParameterizedTest(int first, int second, int expectedResult) {
+        assertEquals(expectedResult, Calculator.adding(first, second),
+                () -> first + " + " + second + " = " + expectedResult + ".");
     }
 }
