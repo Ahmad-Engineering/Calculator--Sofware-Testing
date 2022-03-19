@@ -38,4 +38,16 @@ class AppTest {
         assertEquals(expectedResult, Calculator.adding(first, second),
                 () -> first + " + " + second + " = " + expectedResult + ".");
     }
+
+    @Test
+    @DisplayName("First Logical Assert True Test")
+    void assertTrueTest () {
+        assertTrue(5 < 6);
+    }
+
+    @Test
+    @DisplayName("Second Logical Assert False Test")
+    void assertFalseTest () {
+        assertFalse(5 > 6);
+    }
 }
