@@ -8,8 +8,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import ahmad.Calculator;
+import ahmad.task3.Employee;
+import ahmad.task3.Supplier;
+import ahmad.task3.User;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.jar.Attributes.Name;
 
 import org.junit.jupiter.api.DisplayName;
 
@@ -41,13 +46,213 @@ class AppTest {
 
     @Test
     @DisplayName("First Logical Assert True Test")
-    void assertTrueTest () {
+    void assertTrueTest() {
         assertTrue(5 < 6);
     }
 
     @Test
     @DisplayName("Second Logical Assert False Test")
-    void assertFalseTest () {
+    void assertFalseTest() {
         assertFalse(5 > 6);
+    }
+
+    // Begin
+    // Initialization for task 3
+    User user1 = new User();
+    User user2 = new User();
+    Employee emp1 = null;
+    Employee emp2 = new Employee();
+    Employee emp3 = emp2;
+    Supplier msg = new Supplier("Message");
+
+    // Using first assertion "Compare between objects" ==> Value : Faild
+    @Test
+    @DisplayName("Compare Objects without message ==> Status : Faild (User)")
+    void assertCompareObjectWithoutMessage1() {
+        assertEquals(user1, user2);
+    }
+
+    // Using first assertion "Compare between objects" ==> Value : Success
+    @Test
+    @DisplayName("Compare object without message ==> Status : Success (User)")
+    void assertCompareObjectWithMessage1() {
+        assertEquals(user1, user1);
+    }
+
+    // Using first assertion "Compare between objects" ==> Value : Faild
+    @Test
+    @DisplayName("Compare Objects without message ==> Status : Faild (Employee)")
+    void assertCompareObjectWithoutMessage2() {
+        assertEquals(emp1, emp2);
+    }
+
+    // Using first assertion "Compare between objects" ==> Value : Success
+    @Test
+    @DisplayName("Compare object without message ==> Status : Success (Employee)")
+    void assertCompareObjectWithMessage2() {
+        assertEquals(emp1, emp1);
+    }
+
+    // Using second assertion "Compare between objects" with message ==> Value :
+    // Success
+    @Test
+    @DisplayName("Compare Objects with message ==> Status : Faild (User)")
+    void assertUserCompareObjectWithMessageFaildStatus() {
+        assertEquals(user1, user2, "User 1 dosen\'t equals User 2");
+    }
+
+    // Using second assertion "Compare between objects" with message ==> Value :
+    // Success
+    @Test
+    @DisplayName("Compare Objects with message ==> Status : Success (User)")
+    void assertUserCompareObjectWithMessageSuccessStatus() {
+        assertEquals(user1, user1, "User 1 equals User 1");
+    }
+
+    // Assertion Equals with numbers
+    @Test
+    @DisplayName("Multiplication method with number compare assertion without message: 2 * 5 = 10")
+    void assertNumberWithoutMessageAndSuccessState() {
+        assertEquals(10, Calculator.multiplicationFunction(2, 5));
+    }
+
+    @Test
+    @DisplayName("Multiplication method with number compare assertion with message: 10 % 10 = 0")
+    void assertNumberWithMessageAndSuccessState() {
+        assertEquals(0, Calculator.modulationFunction(10, 10), "The modulation of 10 on 10 must be Zero");
+    }
+
+    @Test
+    @DisplayName("Multiplication method with number compare assertion with Supplier Object Message: 10 - 15 = -5")
+    void assertNumberWithSupplierObjectAndSuccessState() {
+        msg.setMessage("Wrong Equation");
+        assertEquals(-5, Calculator.minusFunction(10, 15), msg.getMessage());
+    }
+
+    // Assertion Not Equals with objects
+    @Test
+    @DisplayName("First object must not equals object two")
+    void objectAssertNotEqualsWithSuccessStatus() {
+        assertNotEquals(user1, user2);
+    }
+
+    @Test
+    @DisplayName("First object must not equals object two with message")
+    void objectAssertNotEqualsWithSuccessStatusWithMessage() {
+        assertNotEquals(user1, user2, "User1 dosen\'t equals User2");
+    }
+
+    @Test
+    @DisplayName("First object must not equals object two with supplier object message")
+    void objectAssertNotEqualsWithSuccessStatusWithSupplierObjectMessage() {
+        msg.setMessage("Wrong Comparision");
+        assertNotEquals(user1, user2, msg.getMessage());
+    }
+
+    // Assertion Not Equals with numbers
+    @Test
+    @DisplayName("First number must not equals second number")
+    void numbersAssertNotEqualsWithSuccessStatus() {
+        assertNotEquals(11, Calculator.adding(10, 0));
+    }
+
+    @Test
+    @DisplayName("First number must not equals second number with message")
+    void numbersAssertNotEqualsWithMessage() {
+        assertNotEquals(11, Calculator.adding(10, 0), "First number dosen\'t equals second number");
+    }
+
+    @Test
+    @DisplayName("First number must not equals second number with supplier message")
+    void numbersAssertNotEqualsWithSupplierMessage() {
+        msg.setMessage("Wrong numbers result comparision");
+        assertNotEquals(11, Calculator.adding(10, 0), msg.getMessage());
+    }
+
+    // Assertion True with conditions
+    @Test
+    @DisplayName("Assert True with condition number 1")
+    void assertTrueWithCondition() {
+        assertTrue(Calculator.minusFunction(5, 4) == Calculator.multiplicationFunction(1, 1));
+    }
+
+    @Test
+    @DisplayName("Assert True with message")
+    void assertTrueWithMessage() {
+        assertTrue(Calculator.minusFunction(5, 4) == Calculator.multiplicationFunction(1, 1), "Wrong Comparision");
+    }
+
+    @Test
+    @DisplayName("Assert True with supplier object")
+    void assertTrueWithSupplierObject() {
+        msg.setMessage("Wrong numbers result comparision assert true");
+        assertTrue(Calculator.minusFunction(5, 4) == Calculator.multiplicationFunction(1, 1), msg.getMessage());
+    }
+
+    // Assertion False with conditions
+    @Test
+    @DisplayName("Assert False with condition number 1")
+    void assertFalseWithCondition() {
+        assertFalse(Calculator.minusFunction(4, 4) == Calculator.multiplicationFunction(1, 1));
+    }
+
+    @Test
+    @DisplayName("Assert False with message")
+    void assertFalseWithMessage() {
+        assertFalse(Calculator.minusFunction(4, 4) == Calculator.multiplicationFunction(1, 1), "Wrong Comparision");
+    }
+
+    @Test
+    @DisplayName("Assert False with supplier object")
+    void assertFalseWithSupplierObject() {
+        msg.setMessage("Wrong numbers result comparision assert false");
+        assertFalse(Calculator.minusFunction(4, 4) == Calculator.multiplicationFunction(1, 1), msg.getMessage());
+    }
+
+    // Assertion Null
+    @Test
+    @DisplayName("Assert Null with object")
+    void assertNullWithObject() {
+        assertNull(emp1);
+    }
+
+    @Test
+    @DisplayName("Assert Null with message")
+    void assertNullWithMessage() {
+        assertNull(emp1, "Null Object");
+    }
+
+    @Test
+    @DisplayName("Assert Null with supplier object")
+    void assertNullWithSupplierObject() {
+        msg.setMessage("You passed a null onbject");
+        assertNull(emp1, msg.getMessage());
+    }
+
+    // Assertion Same
+    @Test
+    @DisplayName("Asser Same with object")
+    void assertSameWithTwoObjects() {
+        assertSame(emp2, emp3);
+    }
+
+    @Test
+    @DisplayName("Assert Same with message")
+    void assertSameWithMessage() {
+        assertSame(emp2, emp2, "These two objects dosen't refer to the same object");
+    }
+
+    @Test
+    @DisplayName("Assert same with supplier object")
+    void assertSameWithSupplierObject() {
+        msg.setMessage("These two objects dosen't refer to the same object");
+        assertSame(emp2, emp3, msg.getMessage());
+    }
+
+    // Throw Assertation
+    @Test
+    void exceptionTesting () {
+        Exception exception = assertThrows(ArithmeticException.class, () -> Calculator.divisionFunction(10, 0));
+        assertEquals("Expected java.lang.ArithmeticException to be thrown, but nothing was thrown", exception.getMessage());
     }
 }
